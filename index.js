@@ -62,8 +62,33 @@ app.command("/ascii-draw", async ({ command, ack, respond }) => {
 app.command("/ascii-text", async ({ command, ack, respond }) => {
   await ack();
   args = command.text.trim().split(' ');
-  text = await figlet.text(args[0], "Ivrit")
-  await respond(text);
+  try {
+    let response;
+    if (args.length > 1) {
+      response = await axios.get(
+        "https://asciified.thelicato.io//api/v2/ascii?",
+        {
+          params: {
+            text: args[0],
+            font: args[1]
+          }
+        } 
+      );
+    } else {
+      response = await axios.get(
+        "https://asciified.thelicato.io//api/v2/ascii?",
+        {
+          params: {
+            text: args[0],
+          }
+        } 
+      );
+    }
+    await respond({ text: "```" + response.data + "```" });
+  }
+  catch (_) {
+    await respond({ text: "Error generating ASCII text"})
+  }
 });
 
 app.command("/ascii-help", async ({ command, ack, respond }) => {
@@ -74,6 +99,7 @@ app.command("/ascii-help", async ({ command, ack, respond }) => {
 /ascii-draw [subject] - Draw ASCII art
         - shrek
         - garfield
+/ascii-text [text] [font?] - Convert text to ASCII art (default font is "Standard")        
 /ascii-help - Show this help message`    
 })
 });
