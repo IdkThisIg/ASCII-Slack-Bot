@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const { App } = require("@slack/bolt");
+const axios = require("axios");
+const figlet = require("figlet");
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -56,6 +58,13 @@ app.command("/ascii-draw", async ({ command, ack, respond }) => {
         await respond({ text: "Unknown subcommand. Use /ascii-help for available commands." });            
     }  
 }); 
+
+app.command("/ascii-text", async ({ command, ack, respond }) => {
+  await ack();
+  args = command.text.trim().split(' ');
+  text = await figlet.text(args[0])
+  await respond(text);
+});
 
 app.command("/ascii-help", async ({ command, ack, respond }) => {
     await ack();
