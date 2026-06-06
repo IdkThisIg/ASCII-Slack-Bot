@@ -62,7 +62,7 @@ app.command("/ascii-draw", async ({ command, ack, respond }) => {
 app.command("/ascii-text", async ({ command, ack, respond }) => {
   await ack();
   args = command.text.trim().split(' ');
-  text = await figlet.text(args[0])
+  text = await figlet.text(args[0], "Ivrit")
   await respond(text);
 });
 
