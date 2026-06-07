@@ -7,7 +7,9 @@ const figlet = require("figlet");
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   appToken: process.env.SLACK_APP_TOKEN,
-  socketMode: true
+  socketMode: true,
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
+  port: process.env.PORT || 3000
 });
 
 app.command("/ascii-draw", async ({ command, ack, respond }) => {
@@ -159,3 +161,17 @@ app.command("/ascii-help", async ({ command, ack, respond }) => {
   await app.start();
   console.log("bot is running!");
 })();
+
+`⢀⣀⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣄⡀⠀
+⣾⢫⠀⢹⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣠⣄⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡉⠈⢻⠂
+⠘⢷⣦⣾⠋⠀⠀⠀⠀⢀⣤⡶⠗⣛⠛⠿⢿⡿⠿⠟⠛⠓⠷⣤⣀⠀⠀⠀⠀⠈⠛⣶⣴⡿⠁
+⠀⠀⣿⠀⠀⠀⠀⢀⣠⣾⣯⡀⢚⠀⠓⠰⢂⠰⡐⠌⠓⠚⡄⣨⣿⣤⣀⠀⠀⠀⠀⠸⡇⠀⠀
+⠀⠀⣿⠀⠀⣠⡾⠛⠉⠀⠈⠛⠷⠾⣥⣧⣬⣦⣵⣬⣽⠶⠿⠛⠁⠀⠙⢻⣦⡀⠀⢸⡇⠀⠀
+⠀⢀⣿⣴⣾⠏⠀⣠⣀⣀⠀⡀⠀⠀⠀⠀⠉⠉⠁⠀⠀⠀⢀⡀⢀⣀⣠⡀⠈⠻⣶⣬⡇⠀⠀
+⣲⣿⣿⡿⠃⠀⣿⣿⣿⣿⣿⣿⣿⣷⣾⣾⣿⣾⣿⣶⣶⣿⣿⣿⣿⣿⣿⣿⣦⠀⢹⣿⣿⣷⡄
+⣿⣿⣿⣟⠀⢈⣿⣿⣿⣿⣿⡏⢉⢹⣿⣿⣿⣿⣿⣿⡿⠉⡉⣿⣿⣿⣿⣿⣿⠀⠀⣿⣿⣿⡇
+⣿⣿⣿⣇⠢⠘⣿⣿⣿⣿⣿⣷⣦⣾⣿⣿⣿⣿⣿⣿⣿⣶⣴⣿⣿⣿⣿⣿⢿⠀⢠⣿⣿⣿⡇
+⠀⠉⠛⢿⣆⠀⠨⠛⢻⣿⣿⣿⣿⣿⣦⣝⡻⢟⣛⣥⣾⣿⣿⣿⣿⣿⡿⡳⠉⢀⣾⠿⠋⠃⠀
+⠀⠀⠀⠀⠘⢷⣄⠀⠀⠀⠹⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠟⠁⠀⢀⣴⠟⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠘⠳⣦⣄⡀⠀⠀⠈⠀⠉⠉⠉⠉⠉⠉⠁⠀⢀⣀⣤⡾⠏⠁⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠛⠷⠲⠶⣤⣤⢤⣤⡶⠶⠶⠿⠋⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀`
