@@ -1,5 +1,6 @@
 import { App, ExpressReceiver } from "@slack/bolt";
 import axios from "axios";
+import 'dotenv/config';
 
 let app;
 let receiver;
