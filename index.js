@@ -1,4 +1,4 @@
-import { App, ExpressReceiver } from "@slack/bolt";
+import { App } from "@slack/bolt";
 import axios from "axios";
 import 'dotenv/config';
 
@@ -8,20 +8,12 @@ let receiver;
 
 function initBolt(env) {
   if (!app) {
-    receiver = new ExpressReceiver({
-      signingSecret: process.env.SLACK_SIGNING_SECRET,
-      clientId: process.env.SLACK_CLIENT_ID,
-      clientSecret: process.env.SLACK_CLIENT_SECRET,
-      stateSecret: process.env.SLACK_STATE_SECRET, 
-      installerOptions: {
-        directInstall: true
-      },
-
-      //installationStore
-    });
 
     app = new App({
-      receiver: receiver
+      token: process.env.SLACK_BOT_TOKEN,
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
+      socketMode: true,
+      appToken: process.env.SLACK_APP_TOKEN
     });
 
     app.command("/ascii-draw", async ({ command, ack, respond }) => {
@@ -177,7 +169,7 @@ export default initBolt;
 initBolt();
 
 (async () => {
-      await app.start(3000);
+      await app.start();
       console.log("bot is running!");
     })();
 
