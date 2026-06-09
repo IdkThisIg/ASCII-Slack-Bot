@@ -116,7 +116,8 @@ function initBolt(env) {
 
     app.command("/ascii-text", async ({ command, ack, respond }) => {
       await ack();
-      args = command.text.trim().split(' ');
+      const args = command.text.trim().split(' ');
+  
       try {
         let response;
         if (args.length > 1) {
