@@ -1,23 +1,44 @@
-import { App, ExpressReceiver } from "@slack/bolt";
+import { App } from "@slack/bolt";
+import express from "express";
 import axios from "axios";
 import 'dotenv/config';
 
 let app;
 let receiver;
+let expressApp;
 
 
 function initBolt(env) {
   if (!app) {
-    receiver = new ExpressReceiver({
-      signingSecret: process.env.SLACK_SIGNING_SECRET,
-    })
+    
+    expressApp = express();
+
+    expressApp.get("/slack/install", (req, res) => {
+      const url = `https://slack.com/oauth/v2/authorize?client_id=${process.env.SLACK_CLIENT_ID}&scope=commands,chat:write&redirect_uri=${process.env.SLACK_REDIRECT_URI}`;
+      res.redirect(url);
+    });
+
+    expressApp.get("/slack/oauth_redirect", async (req, res) => {
+      const { code } = req.query;
+
+      const result = await axios.post("https://slack.com/api/oauth.v2.access", null, {
+        params: {
+        client_id: process.env.SLACK_CLIENT_ID,
+        client_secret: process.env.SLACK_CLIENT_SECRET,
+        code
+        }
+      });
+
+      console.log(result.data);
+
+      res.send("Slack app installed successfully!");
+    });
 
     app = new App({
       token: process.env.SLACK_BOT_TOKEN,
       signingSecret: process.env.SLACK_SIGNING_SECRET,
       socketMode: true,
       appToken: process.env.SLACK_APP_TOKEN,
-      receiver,
     });
 
     app.command("/ascii-draw", async ({ command, ack, respond }) => {
@@ -175,6 +196,9 @@ initBolt();
 
 (async () => {
       await app.start();
+      expressApp.listen(3000, () => {
+        console.log("OAuth server running on port 3000");
+      });
       console.log("bot is running!");
     })();
 
