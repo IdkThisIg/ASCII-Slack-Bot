@@ -1,4 +1,4 @@
-import { App } from "@slack/bolt";
+import { App, ExpressReceiver } from "@slack/bolt";
 import axios from "axios";
 import 'dotenv/config';
 
@@ -8,12 +8,16 @@ let receiver;
 
 function initBolt(env) {
   if (!app) {
+    receiver = new ExpressReceiver({
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
+    })
 
     app = new App({
       token: process.env.SLACK_BOT_TOKEN,
       signingSecret: process.env.SLACK_SIGNING_SECRET,
       socketMode: true,
-      appToken: process.env.SLACK_APP_TOKEN
+      appToken: process.env.SLACK_APP_TOKEN,
+      receiver,
     });
 
     app.command("/ascii-draw", async ({ command, ack, respond }) => {
