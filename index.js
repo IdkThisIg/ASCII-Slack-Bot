@@ -47,7 +47,7 @@ function initBolt(env) {
       const subcommand = args[0].toLowerCase();
       switch (subcommand) {
         case "shrek" :
-            await respond({ text:
+            await respond({response_type: "in_channel", text:
             "⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ "+
             "\n⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀"+ 
             "\n⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀"+ 
@@ -65,7 +65,7 @@ function initBolt(env) {
             "\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ "});
             break;
         case "garfield" :
-            await respond({ text:
+            await respond({response_type: "in_channel", text:
                         `⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠞⠉⢉⣭⣿⣿⠿⣳⣤⠴⠖⠛⣛⣿⣿⡷⠖⣶⣤⡀⠀⠀⠀
           ⠀⠀⠀⠀⠀⠀⠀⣼⠁⢀⣶⢻⡟⠿⠋⣴⠿⢻⣧⡴⠟⠋⠿⠛⠠⠾⢛⣵⣿⠀⠀⠀⠀
           ⣼⣿⡿⢶⣄⠀⢀⡇⢀⡿⠁⠈⠀⠀⣀⣉⣀⠘⣿⠀⠀⣀⣀⠀⠀⠀⠛⡹⠋⠀⠀⠀⠀
@@ -84,7 +84,7 @@ function initBolt(env) {
           ⠀⠀⠀⠀⠀⠀⠉⠓⠶⣤⣄⣀⡀⠀⠀⠀⠀⠀⢀⣀⣠⡴⠖⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀` });
             break;
         case "bluey" :
-            await respond({ text:
+            await respond({response_type: "in_channel", text:
                 `⠀⠀⠀⠀⠀⠀⠀⠀        ,⣰⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢀
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⡆
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⠿⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣧
@@ -108,7 +108,7 @@ function initBolt(env) {
               });
             break;
         case "pikachu" :
-              await respond({ text:
+              await respond({response_type: "in_channel",  text:
                 `⠀⠀⠀⠀⠀⢸⣷⣶⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         ⠀⠀⠀⠀⠀⠘⣿⣿⡇⠐⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         ⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀⠱⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -135,7 +135,7 @@ function initBolt(env) {
               });
           break; 
         default:
-            await respond({ text: "Unknown subcommand. Use /ascii-help for available commands." });            
+            await respond({ text: "Unknown subcommand. Use /ascii-help for available commands."});            
       }  
     }); 
 
@@ -165,7 +165,7 @@ function initBolt(env) {
             } 
           );
         }
-        await respond({ text: "```" + response.data + "```" });
+        await respond({ text: "```" + response.data + "```", response_type: "in_channel"});
       }
       catch (_) {
         await respond({ text: "Error generating ASCII text"})
