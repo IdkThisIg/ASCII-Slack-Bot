@@ -142,6 +142,29 @@ function initBolt(env) {
     app.command("/ascii-text", async ({ command, ack, respond }) => {
       await ack();
       const args = command.text.trim().split(' ');
+      let text;
+      if (args[0][0] == "\"") {
+        text = args[0].replaceAll("\"", "")
+        if (!args[0].endsWith("\"")) {
+          for (const arg of args.toSpliced(0, 1)) {
+            if (arg.endsWith("\"")) {
+              text = text + " " + arg.replaceAll("\"", "")
+              break;
+            } else {
+              text = text + " " + arg
+            }
+          }
+        }  
+      } else { text = args[0] }
+
+      const textLength = text.split(' ').length
+      let font;
+      font = ""
+      for (const arg of args.toSpliced(0, textLength)) {
+        font = font + " " + arg
+      }
+      font = font.trim()
+    
   
       try {
         let response;
@@ -150,8 +173,8 @@ function initBolt(env) {
             "https://asciified.thelicato.io//api/v2/ascii?",
             {
               params: {
-                text: args[0],
-                font: args[1]
+                text: text,
+                font: font
               }
             } 
           );
@@ -160,12 +183,12 @@ function initBolt(env) {
             "https://asciified.thelicato.io//api/v2/ascii?",
             {
               params: {
-                text: args[0],
+                text: text,
               }
             } 
           );
         }
-        await respond({ text: "```" + response.data + "```", response_type: "in_channel"});
+        await respond({ text: "```" + response.data.replaceAll("```", "``\u200B`") + "```", response_type: "in_channel"});
       }
       catch (_) {
         await respond({ text: "Error generating ASCII text"})
@@ -182,7 +205,7 @@ function initBolt(env) {
             - garfield
             - bluey
             - pikachu
-    /ascii-text [text] [font?] - Convert text to ASCII art (default font is "Standard")        
+    /ascii-text [text] [font?] - Convert text to ASCII art (default font is "Standard"; go to https://asciified.thelicato.io/ for available fonts)        
     /ascii-help - Show this help message`    
     })
     });
