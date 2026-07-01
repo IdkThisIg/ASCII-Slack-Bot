@@ -3,6 +3,7 @@ import express from "express";
 import axios from "axios";
 import 'dotenv/config';
 import { images } from "./images.js";
+import { OpenRouter } from '@openrouter/sdk';
 
 let app;
 let receiver;
@@ -60,7 +61,26 @@ function initBolt(env) {
               await respond({response_type: "in_channel",  text: images.pikachu});
           break; 
         default:
-            await respond({ text: "Unknown subcommand. Use /ascii-help for available commands."});            
+            const res = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
+              method: "POST",
+              headers: {
+                "Authorization": `Bearer ${process.env.API_KEY}`,
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                model: "anthropic/claude-sonnet-5",
+                messages: [
+                  {
+                    role: "user",
+                    content: `ASCII art of ${command.text}. Only return the art.`
+                  }
+                ]
+              })
+            });
+
+            const APIData = await res.json();
+
+            await respond(APIData.choices[0].message.content);         
       }  
     }); 
 
