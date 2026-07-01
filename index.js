@@ -59,7 +59,25 @@ function initBolt(env) {
             break;
         case "pikachu" :
               await respond({response_type: "in_channel",  text: images.pikachu});
-          break; 
+              break; 
+        case "waluigi" :
+              await respond({response_type: "in_channel",  text: images.waluigi});
+              break;
+        case "chad" :
+              await respond({response_type: "in_channel",  text: images.chad});
+              break;
+        case "troll" :
+              await respond({response_type: "in_channel",  text: images.troll});
+              break;
+        case "cinema" :
+              await respond({response_type: "in_channel",  text: images.cinema});
+              break;
+        case "megamind" :
+              await respond({response_type: "in_channel",  text: images.megamind});
+              break;
+        case "elmo" :
+              await respond({response_type: "in_channel",  text: images.elmo});
+              break;                       
         default:
             const res = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
               method: "POST",
@@ -80,7 +98,7 @@ function initBolt(env) {
 
             const APIData = await res.json();
 
-            await respond(APIData.choices[0].message.content);         
+            await respond(APIData.choices[0].message.content);        
       }  
     }); 
 
@@ -145,11 +163,17 @@ function initBolt(env) {
         await respond({ 
             text:
     `Available Commands:
-    /ascii-draw [subject] - Draw ASCII art
+    /ascii-draw [subject] - Draw ASCII art (subject can be any of the following or a custom subject):
             - shrek
             - garfield
             - bluey
             - pikachu
+            - waluigi
+            - chad
+            - troll
+            - cinema
+            - megamind
+            - elmo
     /ascii-text [text] [font?] - Convert text to ASCII art (default font is "Standard"; go to https://asciified.thelicato.io/ for available fonts)        
     /ascii-help - Show this help message`    
     })
