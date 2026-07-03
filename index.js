@@ -163,7 +163,7 @@ function initBolt(env) {
         await respond({ 
             text:
     `Available Commands:
-    /ascii-draw [subject] - Draw ASCII art (subject can be any of the following or a custom subject):
+    /ascii-draw [subject] - Draw ASCII art (subject can be any of the following or a custom subject drawn by AI):
             - shrek
             - garfield
             - bluey
