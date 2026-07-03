@@ -179,8 +179,19 @@ function initBolt(env) {
     })
     });
 
-    
-  }
+    app.event("member_joined_channel", async ({ event, client }) => {
+      try {
+        await client.chat.postEphemeral({
+          channel: event.channel,
+          user: event.user,
+          text: "Hello there! I'm the ASCII Bot! For a list of all my commands, type `/ascii-help` in this channel."
+        }) 
+        } catch (error) {
+          console.log("Error")
+          logger.error(error);
+      }  
+    });
+}
 }    
 export default initBolt;
 
