@@ -174,7 +174,7 @@ function initBolt(env) {
             - cinema
             - megamind
             - elmo
-    /ascii-text [text] [font?] - Convert text to ASCII art (default font is "Standard"; go to https://asciified.thelicato.io/ for available fonts)        
+    /ascii-text ["text"] [font?] - Convert text to ASCII art (use double quotes around text; default font is "Standard"; go to https://asciified.thelicato.io/ for available fonts)        
     /ascii-help - Show this help message`    
     })
     });
